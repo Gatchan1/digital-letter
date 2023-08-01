@@ -1,0 +1,21 @@
+h1 {
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(110, 71, 126);
+}
+
+body {
+    background-color: rgb(245, 227, 220);
+}
+
+h1 {
+    margin-left: 3%;
+}
+
+#letter {
+    text-align: center;
+}
+
+canvas {
+    display: inline;
+    background-image: url("../images/paper.png");
+}
