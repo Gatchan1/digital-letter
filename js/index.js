@@ -1,6 +1,9 @@
 const canvas = document.getElementById("canvas");
+const canvas2 = document.getElementById("canvas2");
 const ctx = canvas.getContext("2d");
+const ctx2 = canvas2.getContext("2d");
 ctx.imageSmoothingEnabled = false;
+ctx2.imageSmoothingEnabled = false;
 
 const sprite = document.createElement("img");
 // sprite.src = "./images/Sprite-0005.png" // charIndex * 15
@@ -10,7 +13,7 @@ const reachedEnd = new Audio("./audio/default.wav");
 
 const initialX = 45;
 const initialY = 60;
-const charWidth = 15;
+const charWidth = 14;
 const charHeight = 20;
 let x = initialX;
 let y = initialY;
@@ -23,7 +26,7 @@ const spriteChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
 
 document.body.addEventListener("keydown", (e) => {
   if (e.key !== "Shift" && e.key !== "Dead" && e.key !== "Control" && e.key !== "Backspace" && e.key !== "Enter" && e.key !== "Tab" && e.key !== " ") {
-    if (/[0123456789abcdefghijklmnñopqrstuvwxyzáéíóú.,;:\-_~ ¡!¿?()[\]{}<>^'"`+=/\\%&#$½|@]/gi.test(e.key)) {
+    if (/[0123456789abcdefghijklmnñopqrstuvwxyzáéíóú.,;:\-_~¡!¿?()[\]{}<>^'"`+=/\\%&#$½|@]/gi.test(e.key)) {
       x += charWidth * backspaceCount;
 
       const charIndex = spriteChars.indexOf(e.key);
@@ -45,6 +48,7 @@ document.body.addEventListener("keydown", (e) => {
       }
 
       if (x <= 735) { 
+        cursor.erase();
         if (charIndex >= 0 && charIndex < 27) row = 0;
         if (charIndex >= 27 && charIndex < 54) row = 1;
         if (charIndex >= 54 && charIndex < 81) row = 2; // (character "~" still not working)
@@ -53,26 +57,39 @@ document.body.addEventListener("keydown", (e) => {
         console.log("x position: ", x);
         drawChar();
         x += charWidth;
+        cursor.draw();
         backspaceCount = 0;
-      } else if (x > 735 && x <= 750) { // Too near to the right limit. Only non alphabetical characters are allowed. (751 is the real limit)
+      } else if (x > 735 && x <= 750) { // Too near to the right limit. Only non alphabetical characters are allowed. (750 is the real limit)
         if (charIndex >= 0 && charIndex < 64) {
           reachedEnd.play();
         }
         if (charIndex >= 64) {
+          cursor.erase();
           if (charIndex >= 64 && charIndex < 81) row = 2;
           if (charIndex >= 81 && charIndex < 108) row = 3;
           if (charIndex >= 108 && charIndex < 135) row = 4;
           drawChar();
           x += charWidth;
+          cursor.draw();
           backspaceCount = 0;
         }
+      } else if (x > 750) {
+        reachedEnd.play()
       }
     }
   }
 
   if (e.key === " ") {
     e.preventDefault(); // This is for preventing scroll down when pressing the space bar.
-    x += charWidth;
+    if (x > 750) {
+      reachedEnd.play()
+    } else {
+      x += charWidth * backspaceCount
+      backspaceCount = 0;
+      cursor.erase()
+      x += charWidth;
+      cursor.draw()
+    }    
   }
   if (e.key === "Backspace") {
     if (x >750) x = 750;
@@ -85,14 +102,34 @@ document.body.addEventListener("keydown", (e) => {
   }
   if (e.key === "Enter") {
     if (y <= 1020 - initialY) { // lower limit of the page
+      cursor.erase()
       y += 30;
       x = initialX;
+      cursor.draw()
       backspaceCount = 0;
     }
     // console.log("this is where we are now: ", y)
   }
   if (e.key === "Tab") {
     e.preventDefault(); // Typing tab targets different buttons across the browser. We want to prevent this.
-    x += initialX;
+    if (x > 735) {
+      reachedEnd.play()
+    } else {
+      x += charWidth * backspaceCount
+      backspaceCount = 0;
+      cursor.erase()
+      x += initialX;
+      cursor.draw()
+    }
   }
 });
+
+const cursor = {
+  draw: function() {
+    ctx2.fillStyle = "#99755d"
+    ctx2.fillRect(x+4,y-2,2,20)
+  },
+  erase: function() { // clear whole canvas
+    ctx2.clearRect(0,0,800,1050)
+  }
+}

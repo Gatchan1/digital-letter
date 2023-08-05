@@ -15,7 +15,13 @@ h1 {
     text-align: center;
 }
 
-canvas {
+#canvas {
+    position: absolute;
     display: inline;
     background-image: url("../images/paper.png");
+}
+
+#canvas2 {
+    position: relative;
+    z-index: 1;
 }
