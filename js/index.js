@@ -1,13 +1,16 @@
 const canvas = document.getElementById("canvas");
 const canvas2 = document.getElementById("canvas2");
-const ctx = canvas.getContext("2d");
+const canvas3 = document.getElementById("canvas3");
+const ctx = canvas.getContext("2d"); // writing and crossing-out.
 const ctx2 = canvas2.getContext("2d");
+const ctx3 = canvas3.getContext("2d"); // this one is for the cursor.
 ctx.imageSmoothingEnabled = false;
 ctx2.imageSmoothingEnabled = false;
+ctx3.imageSmoothingEnabled = false;
 
 const sprite = document.createElement("img");
-// sprite.src = "./images/Sprite-0005.png" // charIndex * 15
-sprite.src = "./images/Sprite-0007.png"; // charIndex * 7
+// sprite.src = "./images/font1.png" // charIndex * 15
+sprite.src = "./images/font2.png"; // charIndex * 7
 
 const reachedEnd = new Audio("./audio/default.wav");
 
@@ -126,10 +129,10 @@ document.body.addEventListener("keydown", (e) => {
 
 const cursor = {
   draw: function() {
-    ctx2.fillStyle = "#99755d"
-    ctx2.fillRect(x+4,y-2,2,20)
+    ctx3.fillStyle = "#99755d"
+    ctx3.fillRect(x+4,y-2,2,20)
   },
   erase: function() { // clear whole canvas
-    ctx2.clearRect(0,0,800,1050)
+    ctx3.clearRect(0,0,800,1050)
   }
 }
