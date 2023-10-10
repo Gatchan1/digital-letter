@@ -1,5 +1,7 @@
 h1 {
     font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    font-weight: bold;
     color: rgb(110, 71, 126);
     margin: 0;
 }
@@ -39,4 +41,9 @@ button.sticker {
 #canvas3 {
     position: absolute;
     z-index: 2;
+}
+
+img.washi1 {
+    width: 150px;
+    image-rendering: pixelated;
 }

@@ -1,20 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     <link rel="stylesheet" href="styles/style.css" />
+
     <title>Digital Letter</title>
-</head>
-<body>
-    <nav><h1>Digital Letter</h1>
-    <button class="sticker">Choose a sticker ⭐</button></nav>
+  </head>
+  <body>
+    <nav>
+      <h1>Digital Letter</h1>
+      <button class="sticker" data-toggle="modal" data-target="#stickerModal">Choose a sticker ⭐</button>
+    </nav>
     <div id="letter">
-        <canvas id="canvas" width="800" height="1050"></canvas>
-        <canvas id="canvas2" width="800" height="1050"></canvas>
-        <canvas id="canvas3" width="800" height="1050"></canvas>
+      <canvas id="canvas" width="800" height="1050"></canvas>
+      <canvas id="canvas2" width="800" height="1050"></canvas>
+      <canvas id="canvas3" width="800" height="1050"></canvas>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="stickerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Stickers</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="hola">
+            <button type="button" id="btn-washi1" class="btn btn-light" data-dismiss="modal">
+              <img src="images/washi1.png" class="washi1" alt="yellow dotted pink washi tape" />
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stickers</button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item"><img src="images/washi1.png" id="washi1" alt="yellow dotted pink washi tape" /></a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </div> -->
+
     <script type="text/javascript" src="js/index.js"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
 </html>
