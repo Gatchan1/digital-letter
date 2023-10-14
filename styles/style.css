@@ -1,20 +1,43 @@
-h1 {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 30px;
-    font-weight: bold;
-    color: rgb(110, 71, 126);
-    margin: 0;
-}
-
 body {
     background-color: rgb(245, 227, 220);
 }
 
 nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    height: 100px;
+    min-height: 100px;
+    padding: 10px;
+}
+
+h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(110, 71, 126);
+    width: 338px;
+    padding: 20px 0 0 0;
+    margin: auto;
+}
+
+div.info {
+    max-width: 530px;
+    border: 1px solid black;
+    border-style: dashed;
+    padding: 5px 10px;
+    margin-left: 20px;
+    /* background-color: hsla(160, 100%, 82%, 0.4); */
+}
+
+div.info p {
+    margin: 0;
+}
+div.info span.sticker {
+    background-color: hsl(175, 100%, 92%);
+    /* rgb(255, 204, 212); */
+}
+div.info span.enter {
+    background-color: rgb(255, 255, 201);
 }
 
 button.sticker {
