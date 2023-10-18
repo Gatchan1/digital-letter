@@ -64,11 +64,9 @@ class Sticker {
   }
 }
 
-const washi1 = new Sticker(151, 63, "washi1.png");
-
 document.getElementById("btn-washi1").addEventListener("click", (e) => {
   stickers.forEach((sticker) => sticker.deactivate());
-  stickers.push(washi1);
+  stickers.push(new Sticker(151, 63, "washi1.png"));
 });
 
 const update = function () {
