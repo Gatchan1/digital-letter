@@ -50,10 +50,9 @@ button.sticker {
     margin: auto;
 }
 
-#canvas {
+#canvas1 {
     position: absolute;    
     background-image: url("../images/paper.png");
-    /* display: inline; */
 }
 
 #canvas2 {

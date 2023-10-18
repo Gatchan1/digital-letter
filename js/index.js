@@ -1,19 +1,18 @@
-const canvas = document.getElementById("canvas");
-const canvas2 = document.getElementById("canvas2");
-const canvas3 = document.getElementById("canvas3");
-const ctx = canvas.getContext("2d"); // stickers
-const ctx2 = canvas2.getContext("2d"); // writing and crossing-out.
-const ctx3 = canvas3.getContext("2d"); // this one is for the cursor.
-ctx.imageSmoothingEnabled = false;
-ctx2.imageSmoothingEnabled = false;
-ctx3.imageSmoothingEnabled = false;
+class Canvas {
+  constructor(name) {
+    this.canvas = document.getElementById(name);
+    this.ctx = this.canvas.getContext("2d");
+    this.ctx.imageSmoothingEnabled = false;
+  }
+}
+
+const canvas1 = new Canvas("canvas1");
+const canvas2 = new Canvas("canvas2");
+const canvas3 = new Canvas("canvas3");
 
 const sprite = document.createElement("img");
 // sprite.src = "./images/font1.png" // charIndex * 15
 sprite.src = "./images/font2.png"; // charIndex * 7
-
-const washi1 = document.createElement("img");
-washi1.src = "./images/washi1.png";
 
 const reachedEnd = new Audio("./audio/default.wav");
 
@@ -30,24 +29,25 @@ const writing = {
 
 const cursor = {
   draw: function () {
-    ctx3.fillStyle = "#99755d";
-    ctx3.fillRect(writing.x + 4, writing.y - 2, 2, 20);
+    canvas3.ctx.fillStyle = "#99755d";
+    canvas3.ctx.fillRect(writing.x + 4, writing.y - 2, 2, 20);
   },
   erase: function () {
     // clear whole canvas
-    ctx3.clearRect(0, 0, 800, 1050);
+    canvas3.ctx.clearRect(0, 0, 800, 1050);
   },
 };
 
 const stickers = [];
 
 class Sticker {
-  constructor() {
-    this.w = 151;
-    this.h = 63;
+  constructor(width, height, fileName) {
+    this.w = width;
+    this.h = height;
     this.x = 400 - this.w / 2;
     this.y = 0;
-    this.image = washi1;
+    this.image = document.createElement("img");
+    this.image.src = `./images/${fileName}`;
     this.active = true;
   }
   recalculatePosition(incX, incY) {
@@ -57,21 +57,23 @@ class Sticker {
     }
   }
   print() {
-    ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+    canvas1.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
   }
   deactivate() {
     this.active = false;
   }
 }
 
+const washi1 = new Sticker(151, 63, "washi1.png");
+
 document.getElementById("btn-washi1").addEventListener("click", (e) => {
   stickers.forEach((sticker) => sticker.deactivate());
-  stickers.push(new Sticker());
+  stickers.push(washi1);
 });
 
 const update = function () {
   // CLEAN
-  ctx.clearRect(0, 0, 800, 1050);
+  canvas1.ctx.clearRect(0, 0, 800, 1050);
 
   //REDRAW
   stickers.forEach((sticker) => sticker.print());
@@ -89,7 +91,7 @@ document.body.addEventListener("keydown", (e) => {
       let row;
 
       function drawChar() {
-        ctx2.drawImage(
+        canvas2.ctx.drawImage(
           sprite, // image
           (charIndex % 27) * 7, // x position in sprite
           row * 10, // y position in sprite
@@ -153,7 +155,7 @@ document.body.addEventListener("keydown", (e) => {
       const crossOut = Math.floor(Math.random() * 7);
       console.log("borrandoooo", crossOut);
       // ctx2.fillRect(x,(y-1),writing.charWidth,20);
-      ctx2.drawImage(sprite, crossOut * 7, 4 * 10, 7, 10, writing.x, writing.y, writing.charWidth, writing.charHeight);
+      canvas2.ctx.drawImage(sprite, crossOut * 7, 4 * 10, 7, 10, writing.x, writing.y, writing.charWidth, writing.charHeight);
       writing.backspaceCount += 1;
     }
     if (e.key === "Enter") {
