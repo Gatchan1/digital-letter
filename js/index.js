@@ -14,7 +14,7 @@ const sprite = document.createElement("img");
 // sprite.src = "./images/font1.png" // char.index * 15
 sprite.src = "./images/font2.png"; // char.index * 7
 
-const reachedEnd = new Audio("./audio/default.wav");
+const audioEndOfLine = new Audio("./audio/default.wav");
 
 const char = {
   x: 45,
@@ -26,10 +26,20 @@ const char = {
   backspaceCount: 0,
   row: 0,
   index: 0,
-  moveNext: function() {
+  moveNext: function () {
+    this.x += this.width;
+  },
+  movePrior: function () {
+    this.x -= this.width;
+  },
+  moveNewLine: function() {
+    this.y += 30; // move to next line
+    this.x = this.initialX; // start of line
+  },
+  endStrikethrough: function () {
     this.x += this.width * this.backspaceCount;
   },
-  drawChar: function () {
+  draw: function () {
     canvasText.ctx.drawImage(
       sprite, // image
       (this.index % 27) * 7, // x position in sprite
@@ -56,18 +66,22 @@ const cursor = {
   },
 };
 
-const stickers = [];
-
 class Sticker {
-  constructor(width, height, fileName) {
-    this.w = width;
-    this.h = height;
+  constructor(fileName) {
+    this.designs = {
+      washi1: {
+        width: 151,
+        height: 63
+      }
+    }
+    this.w = this.designs[`${fileName}`].width;
+    this.h = this.designs[`${fileName}`].height;
     this.x = 400 - this.w / 2;
     this.y = 0;
     this.image = document.createElement("img");
-    this.image.src = `./images/${fileName}`;
+    this.image.src = `./images/${fileName}.png`;
     this.active = true;
-    this.position = "";
+    this.position = "";    
   }
   recalculatePosition(incX, incY) {
     if (this.active == true) {
@@ -76,21 +90,45 @@ class Sticker {
     }
   }
   print() {
-    canvasStickerBelow.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+    if (this.position == "below")
+      canvasStickerBelow.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+    else
+      canvasStickerAbove.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
   }
   deactivate() {
     this.active = false;
   }
 }
 
-document.getElementById("btn-washi1").addEventListener("click", (e) => {
-  stickers.forEach((sticker) => sticker.deactivate());
-  stickers.push(new Sticker(151, 63, "washi1.png"));
+const nextSticker = {
+  design: "",
+  position: "",
+}
+const stickers = [];
+
+document.querySelector("button.sticker").addEventListener("click", (e) => {
+  nextSticker.design = e.target.className
 });
+document.querySelector("button#sticker-below").addEventListener("click", (e) => {
+  nextSticker.position = "below";
+});
+document.querySelector("button#sticker-above").addEventListener("click", (e) => {
+  nextSticker.position = "above";
+});
+document.querySelector("button#set-sticker").addEventListener("click", (e) => {
+  stickers.forEach((sticker) => sticker.deactivate());
+  stickers.push(new Sticker(nextSticker.design));
+  stickers[stickers.length - 1].position = nextSticker.position;
+});
+// I have to make the set-sticker button unclickable unless
+// a sticker and a position have been selected!!
+
+
 
 const update = function () {
   // CLEAN
   canvasStickerBelow.ctx.clearRect(0, 0, 800, 1050);
+  canvasStickerAbove.ctx.clearRect(0, 0, 800, 1050);
 
   //REDRAW
   stickers.forEach((sticker) => sticker.print());
@@ -106,6 +144,8 @@ document.body.addEventListener("keydown", (e) => {
       char.index = char.sprites.indexOf(e.key);
       //console.log("character index:", e.key, char.index);
 
+      char.endStrikethrough();
+
       if (char.x <= 735) {
         cursor.erase();
         if (char.index >= 0 && char.index < 27) char.row = 0;
@@ -114,47 +154,45 @@ document.body.addEventListener("keydown", (e) => {
         if (char.index >= 81 && char.index < 108) char.row = 3;
         if (char.index >= 108 && char.index < 135) char.row = 4;
         //console.log("x position: ", char.x);
-        char.drawChar();
-        char.x += char.width;
+        char.draw();
+        char.moveNext();
         cursor.draw();
         char.backspaceCount = 0;
       } else if (char.x > 735 && char.x <= 750) {
         // Too near to the right limit. Only non alphabetical characters are allowed. (750 is the real limit)
         if (char.index >= 0 && char.index < 64) {
-          reachedEnd.play();
+          audioEndOfLine.play();
         }
         if (char.index >= 64) {
           cursor.erase();
           if (char.index >= 64 && char.index < 81) char.row = 2;
           if (char.index >= 81 && char.index < 108) char.row = 3;
           if (char.index >= 108 && char.index < 135) char.row = 4;
-          char.drawChar();
-          char.x += char.width;
+          char.draw();
+          char.moveNext();
           cursor.draw();
           char.backspaceCount = 0;
         }
       } else if (char.x > 750) {
-        reachedEnd.play();
+        audioEndOfLine.play();
       }
-
-      char.moveNext();
     }
 
     if (e.key === " ") {
       e.preventDefault(); // This is for preventing scroll down when pressing the space bar.
       if (char.x > 750) {
-        reachedEnd.play();
+        audioEndOfLine.play();
       } else {
-        char.x += char.width * char.backspaceCount;
+        char.endStrikethrough();
         char.backspaceCount = 0;
         cursor.erase();
-        char.x += char.width;
+        char.moveNext();
         cursor.draw();
       }
     }
     if (e.key === "Backspace") {
       if (char.x > 750) char.x = 750;
-      char.x -= char.width;
+      char.movePrior();
       const crossOut = Math.floor(Math.random() * 7);
       canvasText.ctx.drawImage(sprite, crossOut * 7, 4 * 10, 7, 10, char.x, char.y, char.width, char.height);
       char.backspaceCount += 1;
@@ -164,8 +202,7 @@ document.body.addEventListener("keydown", (e) => {
       if (char.y <= 1020 - char.initialY) {
         // lower limit of the page
         cursor.erase();
-        char.y += 30;
-        char.x = char.initialX;
+        char.moveNewLine();
         cursor.draw();
         char.backspaceCount = 0;
       }
@@ -174,12 +211,12 @@ document.body.addEventListener("keydown", (e) => {
     if (e.key === "Tab") {
       e.preventDefault(); // Typing tab targets different buttons across the browser. We want to prevent this.
       if (char.x > 735) {
-        reachedEnd.play();
+        audioEndOfLine.play();
       } else {
-        char.x += char.width * char.backspaceCount;
+        char.endStrikethrough();
         char.backspaceCount = 0;
         cursor.erase();
-        char.x += char.initialX;
+        char.x += char.initialX; // advance tab distance
         cursor.draw();
       }
     }

@@ -23,8 +23,9 @@
       <canvas id="canvas3" width="800" height="1050"></canvas>
       <canvas id="canvas4" width="800" height="1050"></canvas>
       <div id="tutorial">
-        <p>Try to start writing with your keyboard.</p>
-        <p>When you reach the end of the line, hit Enter to continue on the next line.</p>
+        <p class="less-space-below">Try to start writing with your keyboard.</p>
+        <p class="less-space-below">When you reach the end of the line</p>
+        <p>hit Enter to continue on the next line.</p>
         <p>Enjoy! : )</p>
       </div>
     </div>
@@ -39,14 +40,21 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" id="hola">
+          <div class="modal-body">
             <h5>1 - Choose sticker design</h5>
-            <button type="button" id="btn-washi1" class="btn btn-light" data-dismiss="modal">
+            <button type="button" id="washi1" class="btn btn-light sticker">
               <img src="images/washi1.png" class="washi1" alt="yellow dotted pink washi tape" />
+            </button>
+            <h5>2 - Choose sticker position</h5>
+            <button type="button" id="sticker-below" class="btn btn-outline-primary">
+              <p>Below text</p>
+            </button>
+            <button type="button" id="sticker-above" class="btn btn-outline-primary">
+              <p>Above text</p>
             </button>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" id="set-sticker" class="btn btn-primary" data-dismiss="modal">Set sticker</button>
           </div>
         </div>
       </div>

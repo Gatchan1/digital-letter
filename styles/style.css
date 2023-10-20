@@ -20,6 +20,12 @@ h1 {
     margin: auto;
 }
 
+h2.modal-title {
+    width: 100%;
+    text-align: center;
+    margin-left: 35px;
+}
+
 h5 {
     font-size: 20px;
 }
@@ -80,15 +86,19 @@ button.chooseSticker {
 
 div#tutorial {
     position: absolute;
-    left: 150px;
+    top: 50px;
+    left: 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 4;
 }
-/* div.tutorial p {
-
-} */
+div#tutorial p {
+    font-family: "Consolas", 'Courier New', Courier, monospace;
+}
+div#tutorial p.less-space-below {
+    margin-bottom: 6px;
+}
 
 img.washi1 {
     width: 150px;
