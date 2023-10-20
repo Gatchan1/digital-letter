@@ -20,8 +20,13 @@ h1 {
     margin: auto;
 }
 
+h5 {
+    font-size: 20px;
+}
+
 div.info {
-    max-width: 530px;
+    max-width: 560px;
+    font-size: 14px;
     border: 1px solid black;
     border-style: dashed;
     padding: 5px 10px;
@@ -31,6 +36,7 @@ div.info {
 
 div.info p {
     margin: 0;
+    font-family: "Consolas", 'Courier New', Courier, monospace;
 }
 div.info span.sticker {
     background-color: hsl(175, 100%, 92%);
@@ -40,8 +46,10 @@ div.info span.enter {
     background-color: rgb(255, 255, 201);
 }
 
-button.sticker {
-    padding: 5px;
+button.chooseSticker {
+    padding: 5px 10px 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
 
 #letter {
@@ -64,6 +72,23 @@ button.sticker {
     position: absolute;
     z-index: 2;
 }
+
+#canvas4 {
+    position: absolute;
+    z-index: 3;
+}
+
+div#tutorial {
+    position: absolute;
+    left: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 4;
+}
+/* div.tutorial p {
+
+} */
 
 img.washi1 {
     width: 150px;
