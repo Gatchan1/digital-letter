@@ -106,36 +106,43 @@ const nextSticker = {
 }
 const stickers = [];
 
-document.querySelector("button.sticker").addEventListener("click", (e) => {
-  nextSticker.design = e.target.className
-});
-document.querySelector("button#sticker-below").addEventListener("click", (e) => {
+const stickerBtns = document.querySelectorAll("button.sticker");
+const btnBelow = document.querySelector("button#sticker-below");
+const btnAbove = document.querySelector("button#sticker-above");
+const btnSetSticker = document.querySelector("button#set-sticker");
+
+for (let i = 0; i < stickerBtns.length; i++) {
+  stickerBtns[i].addEventListener("click", (e) => {
+    nextSticker.design = e.currentTarget.id;
+    for (let i = 0; i < stickerBtns.length; i++) {
+      stickerBtns[i].classList.replace("btn-info", "btn-outline-info");
+    }
+    document.getElementById(e.currentTarget.id).classList.replace("btn-outline-info", "btn-info");
+    if (nextSticker.design && nextSticker.position) btnSetSticker.disabled = false;
+  });
+}
+btnBelow.addEventListener("click", (e) => {
   nextSticker.position = "below";
+  btnBelow.classList.replace("btn-outline-info", "btn-info");
+  btnAbove.classList.replace("btn-info", "btn-outline-info");
+  if (nextSticker.design && nextSticker.position) btnSetSticker.disabled = false;
 });
-document.querySelector("button#sticker-above").addEventListener("click", (e) => {
+btnAbove.addEventListener("click", (e) => {
   nextSticker.position = "above";
+  btnAbove.classList.replace("btn-outline-info", "btn-info");
+  btnBelow.classList.replace("btn-info", "btn-outline-info");
+  if (nextSticker.design && nextSticker.position) btnSetSticker.disabled = false;
 });
-document.querySelector("button#set-sticker").addEventListener("click", (e) => {
+btnSetSticker.addEventListener("click", (e) => {
   stickers.forEach((sticker) => sticker.deactivate());
   stickers.push(new Sticker(nextSticker.design));
   stickers[stickers.length - 1].position = nextSticker.position;
+  btnBelow.classList.replace("btn-info", "btn-outline-info");
+  btnAbove.classList.replace("btn-info", "btn-outline-info");
+  for (let i = 0; i < stickerBtns.length; i++) {
+    stickerBtns[i].classList.replace("btn-info", "btn-outline-info");
+  }
 });
-// I have to make the set-sticker button unclickable unless
-// a sticker and a position have been selected!!
-
-
-
-const update = function () {
-  // CLEAN
-  canvasStickerBelow.ctx.clearRect(0, 0, 800, 1050);
-  canvasStickerAbove.ctx.clearRect(0, 0, 800, 1050);
-
-  //REDRAW
-  stickers.forEach((sticker) => sticker.print());
-};
-
-setInterval(update, 60);
-cursor.draw();
 
 document.body.addEventListener("keydown", (e) => {
   document.getElementById("tutorial").style.display = "none";
@@ -246,3 +253,15 @@ document.body.addEventListener("keydown", (e) => {
     }
   }
 });
+
+const update = function () {
+  // CLEAN
+  canvasStickerBelow.ctx.clearRect(0, 0, 800, 1050);
+  canvasStickerAbove.ctx.clearRect(0, 0, 800, 1050);
+
+  //REDRAW
+  stickers.forEach((sticker) => sticker.print());
+};
+
+setInterval(update, 60);
+cursor.draw();

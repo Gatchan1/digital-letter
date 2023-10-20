@@ -58,6 +58,19 @@ button.chooseSticker {
     font-weight: bold;
 }
 
+button.sticker img {    
+    width: 100px;
+    image-rendering: pixelated;
+}
+
+h5.sticker-position {
+    margin: 10px 0;
+}
+
+button.sticker-position {
+    height: 40px;
+}
+
 #letter {
     width: 800px;
     position: relative;
@@ -87,20 +100,15 @@ button.chooseSticker {
 div#tutorial {
     position: absolute;
     top: 50px;
-    left: 240px;
+    left: 225px;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 4;
 }
 div#tutorial p {
-    font-family: "Consolas", 'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
 }
 div#tutorial p.less-space-below {
     margin-bottom: 6px;
-}
-
-img.washi1 {
-    width: 150px;
-    image-rendering: pixelated;
 }
