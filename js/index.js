@@ -11,44 +11,44 @@ const canvasStickerAbove = new Canvas("canvas3"); // sticker above text
 const canvasCursor = new Canvas("canvas4"); // cursor
 
 const sprite = document.createElement("img");
-// sprite.src = "./images/font1.png" // charIndex * 15
-sprite.src = "./images/font2.png"; // charIndex * 7
+// sprite.src = "./images/font1.png" // char.index * 15
+sprite.src = "./images/font2.png"; // char.index * 7
 
 const reachedEnd = new Audio("./audio/default.wav");
 
-const writing = {
-  initialX: 45,
-  initialY: 60,
-  charWidth: 14,
-  charHeight: 20,
+const char = {
   x: 45,
   y: 60,
+  width: 14,
+  height: 20,
+  initialX: 45,
+  initialY: 60,
   backspaceCount: 0,
   row: 0,
-  charIndex: 0,
-  advanceNextCharPosition: function() {
-    this.x += this.charWidth * this.backspaceCount;
+  index: 0,
+  moveNext: function() {
+    this.x += this.width * this.backspaceCount;
   },
   drawChar: function () {
     canvasText.ctx.drawImage(
       sprite, // image
-      (this.charIndex % 27) * 7, // x position in sprite
+      (this.index % 27) * 7, // x position in sprite
       this.row * 10, // y position in sprite
       7, // width in sprite
       10, // height in sprite
       this.x, // x position in canvas
       this.y, // y position in canvas
-      this.charWidth, // width in canvas
-      this.charHeight // height in canvas
+      this.width, // width in canvas
+      this.height // height in canvas
     );
   },
-  spriteChars: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "á", "é", "í", "ó", "ú", "Á", "É", "Í", "Ó", "Ú", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ",", ";", ":", "-", "_", "~", "¡", "!", "¿", "?", "(", ")", "[", "]", "{", "}", "<", ">", "^", "'", '"', "`", "+", "=", "/", "\\", "%", "&", "#", "$", "½", "|", "@"],
+  sprites: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "á", "é", "í", "ó", "ú", "Á", "É", "Í", "Ó", "Ú", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ",", ";", ":", "-", "_", "~", "¡", "!", "¿", "?", "(", ")", "[", "]", "{", "}", "<", ">", "^", "'", '"', "`", "+", "=", "/", "\\", "%", "&", "#", "$", "½", "|", "@"],
 };
 
 const cursor = {
   draw: function () {
     canvasCursor.ctx.fillStyle = "#99755d";
-    canvasCursor.ctx.fillRect(writing.x + 4, writing.y - 2, 2, 20);
+    canvasCursor.ctx.fillRect(char.x + 4, char.y - 2, 2, 20);
   },
   erase: function () {
     // clear whole canvas
@@ -103,83 +103,83 @@ document.body.addEventListener("keydown", (e) => {
   document.getElementById("tutorial").style.display = "none";
   if (!stickers[stickers.length - 1] || !stickers[stickers.length - 1].active) {
     if ("0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ.,;:-_~¡!¿?()[]{}<>^'\"`+=/\\%&#$½|@".includes(e.key)) {
-      writing.charIndex = writing.spriteChars.indexOf(e.key);
-      //console.log("character index:", e.key, charIndex);
+      char.index = char.sprites.indexOf(e.key);
+      //console.log("character index:", e.key, char.index);
 
-      if (writing.x <= 735) {
+      if (char.x <= 735) {
         cursor.erase();
-        if (writing.charIndex >= 0 && writing.charIndex < 27) writing.row = 0;
-        if (writing.charIndex >= 27 && writing.charIndex < 54) writing.row = 1;
-        if (writing.charIndex >= 54 && writing.charIndex < 81) writing.row = 2; // (character "~" still not working)
-        if (writing.charIndex >= 81 && writing.charIndex < 108) writing.row = 3;
-        if (writing.charIndex >= 108 && writing.charIndex < 135) writing.row = 4;
-        //console.log("x position: ", writing.x);
-        writing.drawChar();
-        writing.x += writing.charWidth;
+        if (char.index >= 0 && char.index < 27) char.row = 0;
+        if (char.index >= 27 && char.index < 54) char.row = 1;
+        if (char.index >= 54 && char.index < 81) char.row = 2; // (character "~" still not working)
+        if (char.index >= 81 && char.index < 108) char.row = 3;
+        if (char.index >= 108 && char.index < 135) char.row = 4;
+        //console.log("x position: ", char.x);
+        char.drawChar();
+        char.x += char.width;
         cursor.draw();
-        writing.backspaceCount = 0;
-      } else if (writing.x > 735 && writing.x <= 750) {
+        char.backspaceCount = 0;
+      } else if (char.x > 735 && char.x <= 750) {
         // Too near to the right limit. Only non alphabetical characters are allowed. (750 is the real limit)
-        if (writing.charIndex >= 0 && writing.charIndex < 64) {
+        if (char.index >= 0 && char.index < 64) {
           reachedEnd.play();
         }
-        if (writing.charIndex >= 64) {
+        if (char.index >= 64) {
           cursor.erase();
-          if (writing.charIndex >= 64 && writing.charIndex < 81) writing.row = 2;
-          if (writing.charIndex >= 81 && writing.charIndex < 108) writing.row = 3;
-          if (writing.charIndex >= 108 && writing.charIndex < 135) writing.row = 4;
-          writing.drawChar();
-          writing.x += writing.charWidth;
+          if (char.index >= 64 && char.index < 81) char.row = 2;
+          if (char.index >= 81 && char.index < 108) char.row = 3;
+          if (char.index >= 108 && char.index < 135) char.row = 4;
+          char.drawChar();
+          char.x += char.width;
           cursor.draw();
-          writing.backspaceCount = 0;
+          char.backspaceCount = 0;
         }
-      } else if (writing.x > 750) {
+      } else if (char.x > 750) {
         reachedEnd.play();
       }
 
-      writing.advanceNextCharPosition();
+      char.moveNext();
     }
 
     if (e.key === " ") {
       e.preventDefault(); // This is for preventing scroll down when pressing the space bar.
-      if (writing.x > 750) {
+      if (char.x > 750) {
         reachedEnd.play();
       } else {
-        writing.x += writing.charWidth * writing.backspaceCount;
-        writing.backspaceCount = 0;
+        char.x += char.width * char.backspaceCount;
+        char.backspaceCount = 0;
         cursor.erase();
-        writing.x += writing.charWidth;
+        char.x += char.width;
         cursor.draw();
       }
     }
     if (e.key === "Backspace") {
-      if (writing.x > 750) writing.x = 750;
-      writing.x -= writing.charWidth;
+      if (char.x > 750) char.x = 750;
+      char.x -= char.width;
       const crossOut = Math.floor(Math.random() * 7);
-      canvasText.ctx.drawImage(sprite, crossOut * 7, 4 * 10, 7, 10, writing.x, writing.y, writing.charWidth, writing.charHeight);
-      writing.backspaceCount += 1;
+      canvasText.ctx.drawImage(sprite, crossOut * 7, 4 * 10, 7, 10, char.x, char.y, char.width, char.height);
+      char.backspaceCount += 1;
     }
     if (e.key === "Enter") {
       e.preventDefault(); // It would activate the first button on the site (the sticker modal)
-      if (writing.y <= 1020 - writing.initialY) {
+      if (char.y <= 1020 - char.initialY) {
         // lower limit of the page
         cursor.erase();
-        writing.y += 30;
-        writing.x = writing.initialX;
+        char.y += 30;
+        char.x = char.initialX;
         cursor.draw();
-        writing.backspaceCount = 0;
+        char.backspaceCount = 0;
       }
       // console.log("this is where we are now: ", y)
     }
     if (e.key === "Tab") {
       e.preventDefault(); // Typing tab targets different buttons across the browser. We want to prevent this.
-      if (writing.x > 735) {
+      if (char.x > 735) {
         reachedEnd.play();
       } else {
-        writing.x += writing.charWidth * writing.backspaceCount;
-        writing.backspaceCount = 0;
+        char.x += char.width * char.backspaceCount;
+        char.backspaceCount = 0;
         cursor.erase();
-        writing.x += writing.initialX;
+        char.x += char.initialX;
         cursor.draw();
       }
     }
