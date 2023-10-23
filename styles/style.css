@@ -58,8 +58,16 @@ button.chooseSticker {
     font-weight: bold;
 }
 
-button.sticker img {    
-    width: 100px;
+/* div.sticker-container {
+    display: flex;
+} */
+
+button.sticker {
+    margin: 35px;
+    transform: scale(2);
+}
+
+button.sticker img {
     image-rendering: pixelated;
 }
 

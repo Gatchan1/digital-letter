@@ -70,12 +70,16 @@ class Sticker {
   constructor(fileName) {
     this.designs = {
       washi1: {
-        width: 151,
-        height: 63
+        width: 53,
+        height: 22
+      },
+      bunny : {
+        width: 26,
+        height: 30
       }
     }
-    this.w = this.designs[`${fileName}`].width;
-    this.h = this.designs[`${fileName}`].height;
+    this.w = this.designs[`${fileName}`].width * 3;
+    this.h = this.designs[`${fileName}`].height * 3;
     this.x = 400 - this.w / 2;
     this.y = 0;
     this.image = document.createElement("img");
