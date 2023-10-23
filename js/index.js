@@ -32,7 +32,7 @@ const char = {
   movePrior: function () {
     this.x -= this.width;
   },
-  moveNewLine: function() {
+  moveNewLine: function () {
     this.y += 30; // move to next line
     this.x = this.initialX; // start of line
   },
@@ -71,13 +71,13 @@ class Sticker {
     this.designs = {
       washi1: {
         width: 53,
-        height: 22
+        height: 22,
       },
-      bunny : {
+      bunny: {
         width: 26,
-        height: 30
-      }
-    }
+        height: 30,
+      },
+    };
     this.w = this.designs[`${fileName}`].width * 3;
     this.h = this.designs[`${fileName}`].height * 3;
     this.x = 400 - this.w / 2;
@@ -85,7 +85,8 @@ class Sticker {
     this.image = document.createElement("img");
     this.image.src = `./images/${fileName}.png`;
     this.active = true;
-    this.position = "";    
+    this.position = "";
+    this.rotation = 0;
   }
   recalculatePosition(incX, incY) {
     if (this.active == true) {
@@ -94,10 +95,23 @@ class Sticker {
     }
   }
   print() {
-    if (this.position == "below")
-      canvasStickerBelow.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
-    else
-      canvasStickerAbove.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
+    let context;
+    if (this.position == "below") context = canvasStickerBelow.ctx;
+    else context = canvasStickerAbove.ctx;
+    if (this.rotation == 0) context.drawImage(this.image, this.x, this.y, this.w, this.h);
+    else {
+      context.save();
+      // move to the middle of where we want to draw our image
+      context.translate(this.x + this.w / 2, this.y + this.h / 2);
+      // rotate around that point, converting our
+      // angle from degrees to radians
+      context.rotate((this.rotation * Math.PI) / 180);
+      // draw it up and to the left by half the width
+      // and height of the image
+      context.drawImage(this.image, -(this.w / 2), -(this.h / 2), this.w, this.h);
+      // and restore the co-ords to how they were when we began
+      context.restore();
+    }
   }
   deactivate() {
     this.active = false;
@@ -107,7 +121,7 @@ class Sticker {
 const nextSticker = {
   design: "",
   position: "",
-}
+};
 const stickers = [];
 
 const stickerBtns = document.querySelectorAll("button.sticker");
@@ -257,6 +271,18 @@ document.body.addEventListener("keydown", (e) => {
     }
   }
 });
+
+document.body.addEventListener(
+  "wheel",
+  (e) => {
+    if (stickers[stickers.length - 1] && stickers[stickers.length - 1].active) {
+      e.preventDefault();
+      console.log(e.deltaY);
+      stickers[stickers.length - 1].rotation += e.deltaY / 10;
+    }
+  },
+  { passive: false }
+);
 
 const update = function () {
   // CLEAN

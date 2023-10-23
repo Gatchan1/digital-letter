@@ -37,6 +37,9 @@ div.info {
     border-style: dashed;
     padding: 5px 10px;
     margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /* background-color: hsla(160, 100%, 82%, 0.4); */
 }
 
