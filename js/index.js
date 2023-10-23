@@ -9,10 +9,13 @@ const canvasStickerBelow = new Canvas("canvas1"); // sticker below text
 const canvasText = new Canvas("canvas2"); // text
 const canvasStickerAbove = new Canvas("canvas3"); // sticker above text
 const canvasCursor = new Canvas("canvas4"); // cursor
+const canvasTotal = new Canvas("canvasTotal");
 
 const sprite = document.createElement("img");
 // sprite.src = "./images/font1.png" // char.index * 15
-sprite.src = "./images/font2.png"; // char.index * 7
+// "./images/font2.png"; // char.index * 7
+sprite.crossOrigin = "anonymous";
+sprite.src = "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072521/font2_gqgoms.png"
 
 const audioEndOfLine = new Audio("./audio/default.wav");
 
@@ -72,10 +75,12 @@ class Sticker {
       washi1: {
         width: 53,
         height: 22,
+        src: "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072534/washi1_u68pth.png"
       },
       bunny: {
         width: 26,
         height: 30,
+        src: "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072534/bunny_vuvg1z.png"
       },
     };
     this.w = this.designs[`${fileName}`].width * 3;
@@ -83,7 +88,9 @@ class Sticker {
     this.x = 400 - this.w / 2;
     this.y = 0;
     this.image = document.createElement("img");
-    this.image.src = `./images/${fileName}.png`;
+    this.image.crossOrigin = "anonymous";
+    // this.image.src = `./images/${fileName}.png`;
+    this.image.src = this.designs[`${fileName}`].src;
     this.active = true;
     this.position = "";
     this.rotation = 0;
@@ -295,3 +302,33 @@ const update = function () {
 
 setInterval(update, 60);
 cursor.draw();
+
+const btnFinish = document.querySelector("button.done");
+
+function downloadURI(uri, name) {
+  var link = document.createElement("a");
+  link.download = name;
+  link.href = uri;
+  link.click();
+}
+
+const background = new Image()
+background.crossOrigin = "anonymous";
+background.src = "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698071610/paper_eehc2n.png";
+// background.src = "./images/paper.png";
+
+btnFinish.addEventListener("click", (e) => {
+  canvasTotal.ctx.drawImage(background,0,0)
+  canvasTotal.ctx.drawImage(canvasStickerBelow.canvas,0,0);
+  canvasTotal.ctx.drawImage(canvasText.canvas,0,0);
+  canvasTotal.ctx.drawImage(canvasStickerAbove.canvas,0,0);
+
+  const dataURL = canvasTotal.canvas.toDataURL();
+  // var link = document.createElement("a");
+  // link.download = "digital-letter.png";
+  // link.href = dataURL;
+  // link.click();
+
+  downloadURI(dataURL, "digital-letter.png");
+  canvasTotal.ctx.clearRect(0, 0, 800, 1050);
+});

@@ -11,18 +11,20 @@
   <body>
     <h1>Digital Letter</h1>
     <nav>
-      <button class="chooseSticker" data-toggle="modal" data-target="#stickerModal">Choose a sticker ⭐</button>
+      <button class="chooseSticker" data-toggle="modal" data-target="#stickerModal"> <p>Choose</p><p>a sticker</p><p>⭐</p></button>
       <div class="info">
         <p>Once you've chosen a <span class="sticker">sticker</span> you can MOVE it across the page: ↑ → ↓ ←</p>
         <p>and you can ROTATE it using your mouse SCROLL WHEEL.</p>
         <p>You have to PASTE it with <span class="enter">ENTER</span> before you can resume your writing.</p>
       </div>
+      <button class="done"><p>Finished?</p><p>Download</p><p>your letter</p><p>💌</p></button>
     </nav>
     <div id="letter">
       <canvas id="canvas1" width="800" height="1050"></canvas>
       <canvas id="canvas2" width="800" height="1050"></canvas>
       <canvas id="canvas3" width="800" height="1050"></canvas>
       <canvas id="canvas4" width="800" height="1050"></canvas>
+      <canvas id="canvasTotal" width="800" height="1050"></canvas>
       <div id="tutorial">
         <p class="less-space-below">Try to start writing with your keyboard.</p>
         <p class="less-space-below">When you reach the end of the line</p>
