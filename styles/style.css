@@ -45,17 +45,17 @@ div.info span.enter {
 }
 
 .headerBtn {
-    width: 130px;
+  width: 130px;
   padding: 5px 10px 4px;
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
   transition-duration: 0.3s;
   background-color: #fffbf3;
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.75);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.75);
 }
 .headerBtn:hover {
   background-color: rgb(255, 229, 152); /* Green */
-  box-shadow: 0px 0px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.75);
 }
 
 .headerBtn p,
@@ -64,8 +64,8 @@ div.info p {
 }
 
 div.modal-header {
-    background-color: #17a3b8;
-    color: white;
+  background-color: #17a3b8;
+  color: white;
 }
 
 h2.modal-title {
@@ -81,7 +81,7 @@ h5.top-margin {
   margin: 10px 0;
 }
 #sendLetter h5.top-margin {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 button.sticker {
@@ -98,17 +98,19 @@ button.sticker-position {
 }
 
 div.flex {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 button.download {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #letter {
   width: 800px;
+  height: 1050px;
   position: relative;
+  padding-top: 16px;
   margin: auto;
 }
 
@@ -149,4 +151,21 @@ div#tutorial p {
 }
 div#tutorial p.less-space-below {
   margin-bottom: 6px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 14px 0;
+  margin-top: 40px;
+  background-color: #fffbf3;
+}
+footer p {
+  margin: 0;
+  padding-right: 10px;
+}
+footer img.logo {
+  width: 30px;
+  padding-right: 6px;
 }
