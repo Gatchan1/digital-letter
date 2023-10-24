@@ -24,7 +24,6 @@
         </div>
         <button class="finished headerBtn" data-toggle="modal" data-target="#sendLetter">
           <p>Download</p>
-          <p>or send</p>
           <p>your letter</p>
           <p>💌</p>
         </button>
@@ -92,28 +91,6 @@
             <h5>Here you can download your letter as an image:</h5>
             <div class="flex">
               <button class="btn btn-primary download">Download</button>
-            </div>
-            <h5 class="top-margin">Here you can send your letter through email:</h5>
-
-            <div class="flex">
-              <button class="btn btn-info emailForm" type="button" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">Open form</button>
-            </div>
-            <div class="collapse" id="collapseForm">
-              <div class="card card-body">
-                <form action="mailto:?" method="get" enctype="text/plain">
-                    <label for="emailRecipient">E-mail address:</label>
-                    <input type="email" id="emailRecipient" placeholder="someone@something.com" aria-describedby="emailHelp" />
-                    <label for="bypassSubject">Email subject:</label>
-                    <input type="text" hidden id=realSubject name="subject"/>
-                    <input type="text" id="bypassSubject" value="Here's a letter for you! (Not spam!!)"/>
-                    <label for="emailSender">Your own e-mail address (optional):<p>(This is just so that the recipient can know where to send an answer)</p></label>
-                    <input type="email" id="emailSender" placeholder="your_own@email.com"/>
-                    <textarea hidden id="emailBody" name="body"></textarea>
-                  <div class="sendButton">
-                    <button id="sendEmail" type="submit" value="Send" class="btn btn-primary">Send email</button>
-                  </div>
-                </form>
-              </div>
             </div>
           </div>
           <div class="modal-footer">

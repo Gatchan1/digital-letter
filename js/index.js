@@ -19,8 +19,6 @@ sprite.src = "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072521/font
 
 const audioEndOfLine = new Audio("./audio/default.wav");
 
-let dataURL;
-
 const char = {
   x: 45,
   y: 60,
@@ -172,16 +170,6 @@ btnSetSticker.addEventListener("click", (e) => {
   }
 });
 
-// form button reactive styling
-const btnEmailForm = document.querySelector("#sendLetter button.emailForm");
-
-btnEmailForm.addEventListener("click", (e) => {
-  btnEmailForm.classList.toggle("btn-info");
-  btnEmailForm.classList.toggle("btn-outline-info");
-  if (btnEmailForm.classList.contains("btn-outline-info")) btnEmailForm.innerHTML = "Close form";
-  if (btnEmailForm.classList.contains("btn-info")) btnEmailForm.innerHTML = "Open form";
-});
-
 // (prevent writing while any of the modals are showing)
 const modals = document.getElementsByClassName("modal");
 
@@ -326,6 +314,7 @@ background.crossOrigin = "anonymous";
 background.src = "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698071610/paper_eehc2n.png";
 // background.src = "./images/paper.png";
 
+let dataURL;
 function createLetterImg() {
   canvasTotal.ctx.drawImage(background, 0, 0);
   canvasTotal.ctx.drawImage(canvasStickerBelow.canvas, 0, 0);
@@ -336,25 +325,11 @@ function createLetterImg() {
 }
 
 btnDownload.addEventListener("click", (e) => {
-  createLetterImg()
+  createLetterImg();
   const link = document.createElement("a");
   link.download = "digital-letter.png";
   link.href = dataURL;
   link.click();
 
-  downloadURI(dataURL, "digital-letter.png");
   canvasTotal.ctx.clearRect(0, 0, 800, 1050);
 });
-
-const btnSendEmail = document.getElementById("sendEmail");
-btnSendEmail.addEventListener("click", (e) => {
-  createLetterImg()
-  console.log(dataURL)
-
-  document.querySelector("#sendLetter form #realSubject").value = document.querySelector("#sendLetter form #bypassSubject").value;
-
-  document.querySelector("#sendLetter form #emailBody").value = `${dataURL}`;
-
-  const recipient = document.getElementById("emailRecipient");
-  document.querySelector("#sendLetter form").action = `mailto:${recipient.value}?`
-})

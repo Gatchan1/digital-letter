@@ -102,25 +102,8 @@ div.flex {
     justify-content: center;
 }
 
-#sendLetter .card-body {
-    margin-top: 10px;
-    background-color: rgb(255, 240, 219);
-}
-#sendLetter form input {
-    width: 260px;
-}
-#sendLetter form label p {
-    margin: 0;
-    font-size: 12px;
-}
-
-#sendLetter div.sendButton {
-    display: flex;
-    justify-content: end;
-    height: 60px;
-}
-#sendLetter div.sendButton button {
-    margin-top: 10px;
+button.download {
+    margin-top: 20px;
 }
 
 #letter {
