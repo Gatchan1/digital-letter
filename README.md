@@ -3,6 +3,8 @@
 
 You can't erase what you've written; you can only cross it over. Also, you can place stickers on the paper!!
 
+Please go ahead and check the deploy! [gatchan1.github.io/digital-letter](https://gatchan1.github.io/digital-letter/)
+
 # developer
 Hi! I'm Raquel Barrio (@Gatchan1), I started my journey as a fullstack web developer in 2023.
 
