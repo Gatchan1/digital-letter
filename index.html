@@ -9,16 +9,27 @@
     <title>Digital Letter</title>
   </head>
   <body>
-    <h1>Digital Letter</h1>
-    <nav>
-      <button class="chooseSticker" data-toggle="modal" data-target="#stickerModal"> <p>Choose</p><p>a sticker</p><p>⭐</p></button>
-      <div class="info">
-        <p>Once you've chosen a <span class="sticker">sticker</span> you can MOVE it across the page: ↑ → ↓ ←</p>
-        <p>and you can ROTATE it using your mouse SCROLL WHEEL.</p>
-        <p>You have to PASTE it with <span class="enter">ENTER</span> before you can resume your writing.</p>
+    <header>
+      <h1>Digital Letter</h1>
+      <div class="header-flex">
+        <button class="chooseSticker headerBtn" data-toggle="modal" data-target="#stickerModal">
+          <p>Choose</p>
+          <p>a sticker</p>
+          <p>⭐</p>
+        </button>
+        <div class="info">
+          <p>Once you've chosen a <span class="sticker">sticker</span> you can MOVE it across the page: ↑ → ↓ ←</p>
+          <p>and you can ROTATE it using your mouse SCROLL WHEEL.</p>
+          <p>You have to PASTE it with <span class="enter">ENTER</span> before you can resume your writing.</p>
+        </div>
+        <button class="finished headerBtn" data-toggle="modal" data-target="#sendLetter">
+          <p>Download</p>
+          <p>or send</p>
+          <p>your letter</p>
+          <p>💌</p>
+        </button>
       </div>
-      <button class="done"><p>Finished?</p><p>Download</p><p>your letter</p><p>💌</p></button>
-    </nav>
+    </header>
     <div id="letter">
       <canvas id="canvas1" width="800" height="1050"></canvas>
       <canvas id="canvas2" width="800" height="1050"></canvas>
@@ -33,7 +44,7 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modals -->
     <div class="modal fade" id="stickerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,7 +64,7 @@
                 <img src="images/bunny.png" alt="yellow dotted pink washi tape" />
               </button>
             </div>
-            <h5 class="sticker-position">Choose sticker position:</h5>
+            <h5 class="sticker-position top-margin">Choose sticker position:</h5>
             <button type="button" id="sticker-below" class="btn btn-outline-info sticker-position">
               <p>Below text</p>
             </button>
@@ -63,6 +74,50 @@
           </div>
           <div class="modal-footer">
             <button type="button" id="set-sticker" class="btn btn-primary" disabled data-dismiss="modal">Set sticker</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="sendLetter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Finished your letter?</h2>
+            <button type="button" class="close closeSend" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5>Here you can download your letter as an image:</h5>
+            <div class="flex">
+              <button class="btn btn-primary download">Download</button>
+            </div>
+            <h5 class="top-margin">Here you can send your letter through email:</h5>
+
+            <div class="flex">
+              <button class="btn btn-info emailForm" type="button" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">Open form</button>
+            </div>
+            <div class="collapse" id="collapseForm">
+              <div class="card card-body">
+                <form action="mailto:?" method="get" enctype="text/plain">
+                    <label for="emailRecipient">E-mail address:</label>
+                    <input type="email" id="emailRecipient" placeholder="someone@something.com" aria-describedby="emailHelp" />
+                    <label for="bypassSubject">Email subject:</label>
+                    <input type="text" hidden id=realSubject name="subject"/>
+                    <input type="text" id="bypassSubject" value="Here's a letter for you! (Not spam!!)"/>
+                    <label for="emailSender">Your own e-mail address (optional):<p>(This is just so that the recipient can know where to send an answer)</p></label>
+                    <input type="email" id="emailSender" placeholder="your_own@email.com"/>
+                    <textarea hidden id="emailBody" name="body"></textarea>
+                  <div class="sendButton">
+                    <button id="sendEmail" type="submit" value="Send" class="btn btn-primary">Send email</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary closeSend" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

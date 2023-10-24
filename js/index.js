@@ -15,9 +15,11 @@ const sprite = document.createElement("img");
 // sprite.src = "./images/font1.png" // char.index * 15
 // "./images/font2.png"; // char.index * 7
 sprite.crossOrigin = "anonymous";
-sprite.src = "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072521/font2_gqgoms.png"
+sprite.src = "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072521/font2_gqgoms.png";
 
 const audioEndOfLine = new Audio("./audio/default.wav");
+
+let dataURL;
 
 const char = {
   x: 45,
@@ -75,12 +77,12 @@ class Sticker {
       washi1: {
         width: 53,
         height: 22,
-        src: "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072534/washi1_u68pth.png"
+        src: "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072534/washi1_u68pth.png",
       },
       bunny: {
         width: 26,
         height: 30,
-        src: "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072534/bunny_vuvg1z.png"
+        src: "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698072534/bunny_vuvg1z.png",
       },
     };
     this.w = this.designs[`${fileName}`].width * 3;
@@ -125,6 +127,7 @@ class Sticker {
   }
 }
 
+// stickers creation + sticker button reactive styling
 const nextSticker = {
   design: "",
   position: "",
@@ -169,9 +172,22 @@ btnSetSticker.addEventListener("click", (e) => {
   }
 });
 
+// form button reactive styling
+const btnEmailForm = document.querySelector("#sendLetter button.emailForm");
+
+btnEmailForm.addEventListener("click", (e) => {
+  btnEmailForm.classList.toggle("btn-info");
+  btnEmailForm.classList.toggle("btn-outline-info");
+  if (btnEmailForm.classList.contains("btn-outline-info")) btnEmailForm.innerHTML = "Close form";
+  if (btnEmailForm.classList.contains("btn-info")) btnEmailForm.innerHTML = "Open form";
+});
+
+// (prevent writing while any of the modals are showing)
+const modals = document.getElementsByClassName("modal");
+
 document.body.addEventListener("keydown", (e) => {
   document.getElementById("tutorial").style.display = "none";
-  if (!stickers[stickers.length - 1] || !stickers[stickers.length - 1].active) {
+  if (!modals[0].classList.contains("show") && !modals[1].classList.contains("show") && (!stickers[stickers.length - 1] || !stickers[stickers.length - 1].active)) {
     if ("0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ.,;:-_~¡!¿?()[]{}<>^'\"`+=/\\%&#$½|@".includes(e.key)) {
       char.index = char.sprites.indexOf(e.key);
       //console.log("character index:", e.key, char.index);
@@ -303,32 +319,42 @@ const update = function () {
 setInterval(update, 60);
 cursor.draw();
 
-const btnFinish = document.querySelector("button.done");
+const btnDownload = document.querySelector("button.download");
 
-function downloadURI(uri, name) {
-  var link = document.createElement("a");
-  link.download = name;
-  link.href = uri;
-  link.click();
-}
-
-const background = new Image()
+const background = new Image();
 background.crossOrigin = "anonymous";
 background.src = "https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698071610/paper_eehc2n.png";
 // background.src = "./images/paper.png";
 
-btnFinish.addEventListener("click", (e) => {
-  canvasTotal.ctx.drawImage(background,0,0)
-  canvasTotal.ctx.drawImage(canvasStickerBelow.canvas,0,0);
-  canvasTotal.ctx.drawImage(canvasText.canvas,0,0);
-  canvasTotal.ctx.drawImage(canvasStickerAbove.canvas,0,0);
+function createLetterImg() {
+  canvasTotal.ctx.drawImage(background, 0, 0);
+  canvasTotal.ctx.drawImage(canvasStickerBelow.canvas, 0, 0);
+  canvasTotal.ctx.drawImage(canvasText.canvas, 0, 0);
+  canvasTotal.ctx.drawImage(canvasStickerAbove.canvas, 0, 0);
 
-  const dataURL = canvasTotal.canvas.toDataURL();
-  // var link = document.createElement("a");
-  // link.download = "digital-letter.png";
-  // link.href = dataURL;
-  // link.click();
+  dataURL = canvasTotal.canvas.toDataURL();
+}
+
+btnDownload.addEventListener("click", (e) => {
+  createLetterImg()
+  const link = document.createElement("a");
+  link.download = "digital-letter.png";
+  link.href = dataURL;
+  link.click();
 
   downloadURI(dataURL, "digital-letter.png");
   canvasTotal.ctx.clearRect(0, 0, 800, 1050);
 });
+
+const btnSendEmail = document.getElementById("sendEmail");
+btnSendEmail.addEventListener("click", (e) => {
+  createLetterImg()
+  console.log(dataURL)
+
+  document.querySelector("#sendLetter form #realSubject").value = document.querySelector("#sendLetter form #bypassSubject").value;
+
+  document.querySelector("#sendLetter form #emailBody").value = `${dataURL}`;
+
+  const recipient = document.getElementById("emailRecipient");
+  document.querySelector("#sendLetter form").action = `mailto:${recipient.value}?`
+})

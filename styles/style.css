@@ -1,135 +1,169 @@
 body {
-    background-color: rgb(245, 227, 220);
+  background-color: rgb(245, 227, 220);
 }
 
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100px;
-    padding: 10px;
+header div.header-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  padding: 10px;
 }
 
 h1 {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 40px;
-    font-weight: bold;
-    color: rgb(110, 71, 126);
-    width: 338px;
-    padding: 20px 0 0 0;
-    margin: auto;
-}
-
-h2.modal-title {
-    width: 100%;
-    text-align: center;
-    margin-left: 35px;
-}
-
-h5 {
-    font-size: 20px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 40px;
+  font-weight: bold;
+  color: rgb(110, 71, 126);
+  width: 338px;
+  padding: 20px 0 0 0;
+  margin: auto;
 }
 
 div.info {
-    max-width: 560px;
-    font-size: 14px;
-    border: 1px solid black;
-    border-style: dashed;
-    padding: 5px 10px;
-    margin: 0 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* background-color: hsla(160, 100%, 82%, 0.4); */
+  max-width: 560px;
+  font-size: 14px;
+  border: 1px solid black;
+  border-style: dashed;
+  padding: 5px 10px;
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: hsla(160, 100%, 82%, 0.4); */
 }
 
 div.info p {
-    margin: 0;
-    font-family: "Consolas", 'Courier New', Courier, monospace;
+  font-family: "Consolas", "Courier New", Courier, monospace;
 }
 div.info span.sticker {
-    background-color: hsl(175, 100%, 92%);
-    /* rgb(255, 204, 212); */
+  background-color: hsl(176, 100%, 88%);
+  /* rgb(255, 204, 212); */
 }
 div.info span.enter {
-    background-color: rgb(255, 255, 201);
+  background-color: rgb(255, 255, 172);
 }
 
-button.chooseSticker,
-button.done {
-    padding: 5px 10px 4px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
+.headerBtn {
+    width: 130px;
+  padding: 5px 10px 4px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  transition-duration: 0.3s;
+  background-color: #fffbf3;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.75);
 }
-button.chooseSticker p,
-button.done p {
-    margin: 0
+.headerBtn:hover {
+  background-color: rgb(255, 229, 152); /* Green */
+  box-shadow: 0px 0px 0px rgba(0,0,0,0.75);
 }
 
-/* div.sticker-container {
-    display: flex;
-} */
+.headerBtn p,
+div.info p {
+  margin: 0;
+}
+
+div.modal-header {
+    background-color: #17a3b8;
+    color: white;
+}
+
+h2.modal-title {
+  width: 100%;
+  text-align: center;
+  margin-left: 32px;
+}
+
+h5 {
+  font-size: 20px;
+}
+h5.top-margin {
+  margin: 10px 0;
+}
+#sendLetter h5.top-margin {
+    margin-top: 30px;
+}
 
 button.sticker {
-    margin: 35px;
-    transform: scale(2);
+  margin: 35px;
+  transform: scale(2);
 }
 
 button.sticker img {
-    image-rendering: pixelated;
-}
-
-h5.sticker-position {
-    margin: 10px 0;
+  image-rendering: pixelated;
 }
 
 button.sticker-position {
-    height: 40px;
+  height: 40px;
+}
+
+div.flex {
+    display: flex;
+    justify-content: center;
+}
+
+#sendLetter .card-body {
+    margin-top: 10px;
+    background-color: rgb(255, 240, 219);
+}
+#sendLetter form input {
+    width: 260px;
+}
+#sendLetter form label p {
+    margin: 0;
+    font-size: 12px;
+}
+
+#sendLetter div.sendButton {
+    display: flex;
+    justify-content: end;
+    height: 60px;
+}
+#sendLetter div.sendButton button {
+    margin-top: 10px;
 }
 
 #letter {
-    width: 800px;
-    position: relative;
-    margin: auto;
+  width: 800px;
+  position: relative;
+  margin: auto;
 }
 
-#canvas1 {
-    position: absolute;    
-    background-image: url("../images/paper.png");
-}
-
-#canvas2 {
-    position: absolute;
-    z-index: 1;
-}
-
-#canvas3 {
-    position: absolute;
-    z-index: 2;
-}
-
-#canvas4 {
-    position: absolute;
-    z-index: 3;
-}
-
+#canvas1,
+#canvas2,
+#canvas3,
+#canvas4,
 #canvasTotal {
-    position: absolute;
-    z-index: 4;
+  position: absolute;
+}
+#canvas1 {
+  background-image: url("../images/paper.png");
+}
+#canvas2 {
+  z-index: 1;
+}
+#canvas3 {
+  z-index: 2;
+}
+#canvas4 {
+  z-index: 3;
+}
+#canvasTotal {
+  z-index: 4;
 }
 
 div#tutorial {
-    position: absolute;
-    top: 50px;
-    left: 225px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 4;
+  position: absolute;
+  top: 50px;
+  left: 214px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 4;
 }
 div#tutorial p {
-    font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 div#tutorial p.less-space-below {
-    margin-bottom: 6px;
+  margin-bottom: 6px;
 }
