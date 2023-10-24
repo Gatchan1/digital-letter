@@ -5,6 +5,8 @@ You can't erase what you've written; you can only cross it over. Also, you can p
 
 Please go ahead and check the deploy! [gatchan1.github.io/digital-letter](https://gatchan1.github.io/digital-letter/)
 
+![Project Image](https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698165021/Captura_de_pantalla_2023-10-24_182422_zyfpsk.png "Project Image")
+
 # developer
 Hi! I'm Raquel Barrio (@Gatchan1), I started my journey as a fullstack web developer in 2023.
 
@@ -17,5 +19,3 @@ HTML, JavaScript and CSS.
 I drew the sprites for both the letters and the stickers using Aseprite.
 
 The stickers can be placed below the text or above it (I'm actually using four canvas, one on top of the other), and they can also be rotated.
-
-![Project Image](https://res.cloudinary.com/dqzjo5wsl/image/upload/v1698165021/Captura_de_pantalla_2023-10-24_182422_zyfpsk.png "Project Image")
