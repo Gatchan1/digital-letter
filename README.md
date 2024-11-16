@@ -16,6 +16,6 @@ I love coding, my friends, board games, comics and stationery <3
 HTML, JavaScript and CSS.
 
 # stickers
-I drew the sprites for both the letters and the stickers using Aseprite.
+I drew the sprites for both the font and the stickers using Aseprite.
 
 The stickers can be placed below the text or above it (I'm actually using four canvas, one on top of the other), and they can also be rotated.
